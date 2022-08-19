@@ -1,0 +1,43 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:data_.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String @id
+  profile   String
+  nickname  String @unique
+  lastLogin DateTime @default(now())
+}
+
+model Oauth2 {
+  id           String @id @unique
+  token_type   String? @default(value: "Bearer")
+  access_token String
+}
+
+model Post {
+  id         String @id @default(cuid())
+  author_id  String
+  title      String
+  content    String
+  like       String
+  view       Int
+  published  Boolean @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now())
+}
+
+model Comment {
+  id         String @id @default(cuid())
+  post_id    String
+  author_id  String
+  content    String
+  like       String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now())
+}
